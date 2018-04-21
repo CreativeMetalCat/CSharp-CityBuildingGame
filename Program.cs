@@ -133,50 +133,42 @@ namespace GameToWorkWith
             Water = 1000;
             People = 5;
         }
-        protected void Render()
+        public void Render()
         {
             try
-            {
-                while (true)
+            {   if (tiles.Count > 0)
                 {
-                    if (tiles.Count > 0)
+                    int BiggestLayer = 0;
+                    for (int i = 0; i < tiles.Count; i++)
                     {
-                        int BiggestLayer = 0;
-                        for (int i = 0; i < tiles.Count; i++)
+                        if (tiles[i].Layer > BiggestLayer)
                         {
-                            if (tiles[i].Layer > BiggestLayer)
-                            {
-                                BiggestLayer = tiles[i].Layer;
-                            }
-                        }
-                        graphics.Clear(Color.YellowGreen);
-                        if (BiggestLayer != 0)
-                        {
-                            for (int layer = 0; layer <= BiggestLayer; layer++)
-                            {
-                                for (int i = 0; i < tiles.Count; i++)
-                                {
-                          
-                                    if (tiles[i].Layer == layer)
-                                    {
-                                        if (tiles[i].GetType() == typeof(Lake))
-                                        {
-                                            pen.Color = Color.Blue;
-                                            graphics.FillEllipse(pen.Brush, tiles[i].block);
-                                        }
-                                        if (tiles[i] is Building)
-                                        {
-                                            pen.Color = tiles[i].color;
-                                            graphics.FillRectangle(pen.Brush, tiles[i].block);
-                                        }
-                                    }
-                                }//for
-                            }//for
+                            BiggestLayer = tiles[i].Layer;
                         }
                     }
-                    Thread.Sleep(1000);
-                }
-            }
+                    graphics.Clear(Color.YellowGreen);
+                    for (int layer = 0; layer <= BiggestLayer; layer++)
+                    {
+                        for (int i = 0; i < tiles.Count; i++)
+                        {
+
+                            if (tiles[i].Layer == layer)
+                            {
+                                if (tiles[i].GetType() == typeof(Lake))
+                                {
+                                    pen.Color = Color.Blue;
+                                    graphics.FillEllipse(pen.Brush, tiles[i].block);
+                                }
+                                if (tiles[i] is Building)
+                                {
+                                    pen.Color = tiles[i].color;
+                                    graphics.FillRectangle(pen.Brush, tiles[i].block);
+                                }
+                            }
+                        }//for
+                    }//for
+                }//if
+            }//try
             catch(ArgumentException)
             {
 
@@ -212,11 +204,9 @@ namespace GameToWorkWith
         }
         public void Run()
         {
-            Thread tr = new Thread(Render);
-            tr.IsBackground = true;
-            tr.Start();
             GenWorld(Size.Normal);
-            while (tr.IsAlive==true)
+            
+            while (true)
             {
                 for (int i = 0; i < tiles.Count; i++)
                 {
@@ -243,8 +233,9 @@ namespace GameToWorkWith
                 {
                     break;
                 }
-                    Thread.Sleep(10000);
-                }
+                Render();
+                Thread.Sleep(10000);
+            }
             Console.WriteLine("Done!");
         }
         public void Load(string filename)
