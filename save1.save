@@ -1,0 +1,32 @@
+<save>
+  <Date>17.04.2018 20:06:52</Date>
+  <basic>
+    <tile type="Lake" location="235.308" />
+    <tile type="Lake" location="530.360" />
+    <tile type="Lake" location="388.7" />
+    <tile type="Lake" location="67.269" />
+    <tile type="Lake" location="57.270" />
+    <tile type="Lake" location="411.72" />
+    <tile type="Lake" location="284.394" />
+    <tile type="Lake" location="386.386" />
+    <tile type="Lake" location="176.373" />
+    <tile type="Lake" location="170.140" />
+    <tile type="Lake" location="447.355" />
+    <tile type="Lake" location="68.407" />
+    <tile type="Lake" location="213.228" />
+    <tile type="Lake" location="452.257" />
+    <tile type="Lake" location="280.79" />
+    <tile type="Farm" location="555.135" />
+    <tile type="PumpS" location="383.188" />
+    <tile type="House" location="246.72" />
+    <tile type="Farm" location="241.257" />
+    <tile type="PumpS" location="538.101" />
+  </basic>
+  <additional>
+    <statistics>
+      <Food>800</Food>
+      <Water>550</Water>
+      <People>15</People>
+    </statistics>
+  </additional>
+</save>
