@@ -132,5 +132,10 @@ namespace GameToWorkWith
             openFileDialog1.ShowDialog();
             game.Load(openFileDialog1.FileName);
         }
+        
+        private void Form1_Paint(object sender, PaintEventArgs e)
+        {
+            game.Render();
+        }
     }
 }
