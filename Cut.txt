@@ -1,0 +1,178 @@
+﻿    public class ESave
+    {
+        public static void Save(Game game,int NumOfFile)
+        {
+            XmlDocument doc = new XmlDocument();
+            XmlElement root = doc.CreateElement("save");
+            XmlElement basic= doc.CreateElement("basic");
+            XmlElement add = doc.CreateElement("additional");
+            XmlElement stats = doc.CreateElement("statistics");
+            XmlElement f = doc.CreateElement("Food");
+            XmlElement w = doc.CreateElement("Water");
+            XmlElement p = doc.CreateElement("People");
+            XmlElement date = doc.CreateElement("Date");
+            date.InnerText = DateTime.Now.ToString();
+            XmlElement tile;
+            XmlAttribute loc;
+            XmlAttribute type;
+            for(int i=0;i<game.tiles.Count;i++)
+            {
+                tile = doc.CreateElement("tile");
+                loc = doc.CreateAttribute("location");
+                type = doc.CreateAttribute("type");
+                if (game.tiles[i].GetType() == typeof(Lake))
+                {
+                    type.InnerText = "Lake";
+                    loc.InnerText = game.tiles[i].block.X.ToString() + "." + game.tiles[i].block.Y.ToString();
+                    tile.Attributes.Append(type);
+                    tile.Attributes.Append(loc);
+                    basic.AppendChild(tile);
+                }
+                if (game.tiles[i] is Building)
+                {
+                    if (game.tiles[i].GetType() == typeof(House))
+                    {
+                        type.InnerText = "House";
+                        loc.InnerText = game.tiles[i].block.X.ToString() + "." + game.tiles[i].block.Y.ToString();
+                        tile.Attributes.Append(type);
+                        tile.Attributes.Append(loc);
+                        basic.AppendChild(tile);
+                    }
+                    if (game.tiles[i].GetType() == typeof(PumpingStation))
+                    {
+                        type.InnerText = "PumpS";
+                        loc.InnerText = game.tiles[i].block.X.ToString() + "." + game.tiles[i].block.Y.ToString();
+                        tile.Attributes.Append(type);
+                        tile.Attributes.Append(loc);
+                        basic.AppendChild(tile);
+                    }
+                    if (game.tiles[i].GetType() == typeof(Farm))
+                    {
+                        type.InnerText = "Farm";
+                        loc.InnerText = game.tiles[i].block.X.ToString() + "." + game.tiles[i].block.Y.ToString();
+                        tile.Attributes.Append(type);
+                        tile.Attributes.Append(loc);
+                        basic.AppendChild(tile);
+                    }
+                }
+            }
+            f.InnerText = game.Food.ToString();
+            w.InnerText = game.Water.ToString();
+            p.InnerText = game.People.ToString();
+            stats.AppendChild(f);
+            stats.AppendChild(w);
+            stats.AppendChild(p);
+            add.AppendChild(stats);
+            root.AppendChild(date);
+            root.AppendChild(basic);
+            root.AppendChild(add);
+            doc.AppendChild(root);
+            doc.Save("save"+NumOfFile+".save");
+            game.Dispose();
+            
+        }
+    }
+    public class ELoad
+    {
+        public static void Load(Game game,string filename)
+        {
+            game.tiles.Clear();
+            game.graphics.Clear(Color.YellowGreen);
+            XmlDocument doc=new XmlDocument();
+            doc.Load(filename);
+            XmlElement root = doc.DocumentElement;
+            foreach (XmlNode node in root.GetElementsByTagName("basic"))
+            {
+                for (int i = 0; i < node.ChildNodes.Count; i++)
+                {
+                    string loc = node.ChildNodes[i].Attributes.GetNamedItem("location").Value;
+                    if(loc.IndexOf(".")>0)
+                    {
+                        int x = Convert.ToInt32(loc.Substring(0, loc.IndexOf(".")));
+                        int y = Convert.ToInt32(loc.Substring(loc.IndexOf(".")+1));
+                        PointF p = new PointF(x, y);
+                        if (node.ChildNodes[i].Attributes.GetNamedItem("type").Value == "House")
+                        {
+                            game.tiles.Add(new House(15, p, Color.Brown, Size.Normal));
+                        }
+                        if (node.ChildNodes[i].Attributes.GetNamedItem("type").Value == "PumpS")
+                        {
+                            game.tiles.Add(new PumpingStation(100, 500, p, Color.Aqua, 5, Size.Normal));
+                        }
+                        if (node.ChildNodes[i].Attributes.GetNamedItem("type").Value == "Farm")
+                        {
+                            game.tiles.Add(new Farm(100, 500, p, Color.Green, 5, Size.Normal));
+                        }
+                        if (node.ChildNodes[i].Attributes.GetNamedItem("type").Value == "Lake")
+                        {
+                            game.tiles.Add(new Lake(new RectangleF(p.X, p.Y, 40, 40)));
+                        }
+                    }
+                    else
+                    {
+                        throw (new ApplicationException(loc.IndexOf(".").ToString()));
+                    }
+                }//for
+            }//foreeach
+            foreach (XmlNode node in root.ChildNodes)
+            {
+                if(node.Name=="basic")
+                {
+                    for (int i = 0; i < node.ChildNodes.Count; i++)
+                    {
+                        string loc = node.ChildNodes[i].Attributes.GetNamedItem("location").Value;
+                        if (loc.IndexOf(".") > 0)
+                        {
+                            int x = Convert.ToInt32(loc.Substring(0, loc.IndexOf(".")));
+                            int y = Convert.ToInt32(loc.Substring(loc.IndexOf(".") + 1));
+                            PointF p = new PointF(x, y);
+                            if (node.ChildNodes[i].Attributes.GetNamedItem("type").Value == "House")
+                            {
+                                game.tiles.Add(new House(15, p, Color.Brown, Size.Normal));
+                            }
+                            if (node.ChildNodes[i].Attributes.GetNamedItem("type").Value == "PumpS")
+                            {
+                                game.tiles.Add(new PumpingStation(100, 500, p, Color.Aqua, 5, Size.Normal));
+                            }
+                            if (node.ChildNodes[i].Attributes.GetNamedItem("type").Value == "Farm")
+                            {
+                                game.tiles.Add(new Farm(100, 500, p, Color.Green, 5, Size.Normal));
+                            }
+                            if (node.ChildNodes[i].Attributes.GetNamedItem("type").Value == "Lake")
+                            {
+                                game.tiles.Add(new Lake(new RectangleF(p.X, p.Y, 40, 40)));
+                            }
+                        }
+                        else
+                        {
+                            throw (new ApplicationException(loc.IndexOf(".").ToString()));
+                        }
+                    }//for
+                }
+                if(node.Name=="additional")
+                {
+                    foreach (XmlNode data in node)
+                    {
+                        if(data.Name=="statistics")
+                        {
+                            for(int i=0;i<data.ChildNodes.Count;i++)
+                            {
+                                if(data.ChildNodes[i].Name=="Food")
+                                {
+                                    game.Food = Convert.ToInt64(data.ChildNodes[i].Value);
+                                }
+                                if(data.ChildNodes[i].Name=="Water")
+                                {
+                                    game.Water = Convert.ToInt64(data.ChildNodes[i].Value);
+                                }
+                                if (data.ChildNodes[i].Name == "People")
+                                {
+                                    game.People = Convert.ToInt32(data.ChildNodes[i].Value);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }//load
+    }//class
