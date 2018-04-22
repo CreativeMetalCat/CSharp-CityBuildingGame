@@ -1,0 +1,41 @@
+<save>
+  <Date>22.04.2018 17:12:54</Date>
+  <basic>
+    <tile layer="0" type="Lake" location="653.440" />
+    <tile layer="0" type="Lake" location="280.206" />
+    <tile layer="0" type="Lake" location="233.376" />
+    <tile layer="0" type="Lake" location="651.94" />
+    <tile layer="0" type="Lake" location="472.218" />
+    <tile layer="0" type="Lake" location="438.43" />
+    <tile layer="0" type="Lake" location="51.387" />
+    <tile layer="0" type="Lake" location="665.265" />
+    <tile layer="0" type="Lake" location="151.355" />
+    <tile layer="0" type="Lake" location="137.397" />
+    <tile layer="0" type="Lake" location="28.226" />
+    <tile layer="0" type="Lake" location="188.35" />
+    <tile layer="0" type="Lake" location="457.6" />
+    <tile layer="0" type="Lake" location="185.425" />
+    <tile layer="0" type="Lake" location="120.361" />
+    <tile layer="1" type="Farm" location="503.79" />
+    <tile layer="1" type="PumpS" location="335.126" />
+    <tile layer="1" type="House" location="226.13" />
+    <tile layer="1" type="Farm" location="422.249" />
+    <tile layer="1" type="PumpS" location="130.185" />
+    <tile layer="1" type="House" location="543.224" />
+    <tile layer="1" type="Farm" location="299.321" />
+    <tile layer="1" type="Farm" location="529.206" />
+    <tile layer="1" type="PumpS" location="319.164" />
+    <tile layer="1" type="House" location="442.356" />
+    <tile layer="1" type="PumpS" location="460.166" />
+    <tile layer="1" type="House" location="298.68" />
+    <tile layer="1" type="Farm" location="215.249" />
+    <tile layer="1" type="PumpS" location="493.358" />
+  </basic>
+  <additional>
+    <statistics>
+      <Food>-1200</Food>
+      <Water>-3950</Water>
+      <People>45</People>
+    </statistics>
+  </additional>
+</save>
