@@ -1,4 +1,4 @@
-﻿namespace GameToWorkWith
+namespace GameToWorkWith
 {
     partial class Form1
     {
@@ -32,12 +32,12 @@
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.BuildGroup = new System.Windows.Forms.GroupBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.button4 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.BuildGroup.SuspendLayout();
             this.SuspendLayout();
@@ -91,6 +91,15 @@
             this.BuildGroup.TabStop = false;
             this.BuildGroup.Text = "Buildings";
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(85, 408);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(57, 22);
+            this.label1.TabIndex = 3;
+            this.label1.Text = "label1";
+            // 
             // button4
             // 
             this.button4.Location = new System.Drawing.Point(4, 403);
@@ -138,15 +147,6 @@
             this.label2.TabIndex = 3;
             this.label2.Text = "0";
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(85, 408);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(57, 22);
-            this.label1.TabIndex = 3;
-            this.label1.Text = "label1";
-            // 
             // openFileDialog1
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
@@ -184,4 +184,3 @@
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
     }
 }
-
