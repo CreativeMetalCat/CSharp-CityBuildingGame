@@ -1,4 +1,4 @@
-﻿
+
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -116,7 +116,7 @@ namespace GameToWorkWith
             RequiredMoney = requiredMoney;
         }
     }
-    public class Game 
+    public class Game
     {
         public int Layers = 0;
         public float Food;
@@ -136,7 +136,8 @@ namespace GameToWorkWith
         public void Render()
         {
             try
-            {   if (tiles.Count > 0)
+            {
+                if (tiles.Count > 0)
                 {
                     int BiggestLayer = 0;
                     for (int i = 0; i < tiles.Count; i++)
@@ -169,7 +170,7 @@ namespace GameToWorkWith
                     }//for
                 }//if
             }//try
-            catch(ArgumentException)
+            catch (ArgumentException)
             {
 
             }
@@ -182,10 +183,10 @@ namespace GameToWorkWith
                 pen.Color = Color.Blue;
                 for (int i = 0; i < 15; i++)
                 {
-                    int x= r.Next(666);
-                    int y= r.Next(450);
+                    int x = r.Next(666);
+                    int y = r.Next(450);
                     graphics.FillEllipse(pen.Brush, x, y, 40, 40);
-                    tiles.Add(new Lake(new RectangleF(x, y, 40, 40),0));
+                    tiles.Add(new Lake(new RectangleF(x, y, 40, 40), 0));
                 }
             }
 
@@ -202,46 +203,39 @@ namespace GameToWorkWith
             }
             return t;
         }
-        public void Run()
+        public void Count()
         {
-            GenWorld(Size.Normal);
-            
-            while (true)
+            for (int i = 0; i < tiles.Count; i++)
             {
-                for (int i = 0; i < tiles.Count; i++)
+                if (tiles[i].GetType() == typeof(Building))
                 {
-                    if (tiles[i].GetType() == typeof(Building))
+                    if (tiles[i].GetType() == typeof(Farm))
                     {
-                        if (tiles[i].GetType() == typeof(Farm))
-                        {
-                            Farm f = tiles[i] as Farm;
-                            Food += f.ProduceOfFood;
-                        }
-                        if (tiles[i].GetType() == typeof(PumpingStation))
-                        {
-                            PumpingStation p = tiles[i] as PumpingStation;
-                            Water += p.ProduceOfWater;
-                        }
+                        Farm f = tiles[i] as Farm;
+                        Food += f.ProduceOfFood;
+                    }
+                    if (tiles[i].GetType() == typeof(PumpingStation))
+                    {
+                        PumpingStation p = tiles[i] as PumpingStation;
+                        Water += p.ProduceOfWater;
                     }
                 }
-                for (int i = 0; i < People; i++)
-                {
-                    Food -= 40;
-                    Water -= 90;
-                }
-                if (Food < 0 && Water < 0)
-                {
-                    break;
-                }
-                Render();
-                Thread.Sleep(10000);
             }
-            Console.WriteLine("Done!");
+            for (int i = 0; i < People; i++)
+            {
+                Food -= 40;
+                Water -= 90;
+            }
+            if (Food < 0 && Water < 0)
+            {
+
+            }
         }
+
         public void Load(string filename)
         {
-           tiles.Clear();
-           graphics.Clear(Color.YellowGreen);
+            tiles.Clear();
+            graphics.Clear(Color.YellowGreen);
             XmlDocument doc = new XmlDocument();
             doc.Load(filename);
             XmlElement root = doc.DocumentElement;
@@ -259,7 +253,7 @@ namespace GameToWorkWith
                             PointF p = new PointF(x, y);
                             if (node.ChildNodes[i].Attributes.GetNamedItem("type").Value == "House")
                             {
-                                tiles.Add(new House(15, p, Color.Brown, Size.Normal,Convert.ToInt32(node.ChildNodes[i].Attributes.GetNamedItem("layer").Value)));
+                                tiles.Add(new House(15, p, Color.Brown, Size.Normal, Convert.ToInt32(node.ChildNodes[i].Attributes.GetNamedItem("layer").Value)));
                             }
                             if (node.ChildNodes[i].Attributes.GetNamedItem("type").Value == "PumpS")
                             {
@@ -276,7 +270,7 @@ namespace GameToWorkWith
                         }
                         else
                         {
-                            throw (new ApplicationException(loc.IndexOf(".").ToString()+"Save file corrupted"));
+                            throw (new ApplicationException(loc.IndexOf(".").ToString() + "Save file corrupted"));
                         }
                     }//for
                 }
