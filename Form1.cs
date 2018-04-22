@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
@@ -16,18 +16,32 @@ namespace GameToWorkWith
         public PumpingStation pump;
         public Farm farm;
         Game game;
+        bool SetupComplete = false;
         Buildings building = Buildings.None;
         public Form1()
         {
             InitializeComponent();
         }
-
+        void WaitTill(int Time)
+        {
+            Thread.Sleep(Time);
+        }
+        void Count()
+        {
+            while (true)
+            {
+                game.Count();
+                Thread.Sleep(10000);
+            }
+        }
         private void Form1_Load(object sender, EventArgs e)
         {
             game = new Game(CreateGraphics());
-            Thread tr = new Thread(game.Run);
-            tr.IsBackground = true;
-            tr.Start();
+            game.GenWorld(GameToWorkWith.Size.Normal);
+            Thread thread = new Thread(Count);
+            thread.IsBackground = true;
+            thread.Start();
+            SetupComplete = true;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -66,27 +80,7 @@ namespace GameToWorkWith
                 bool temp = false;
                 if (building != Buildings.None)
                 {
-                    //for (int i = 0; i < game.tiles.Count; i++)
-                    //{
-                    //    if (game.tiles[i] is Building)
-                    //    {
-                    //        for (int u = 0; u < 20; u++)
-                    //        {
-                    //            if (e.X == game.tiles[i].block.X + u)
-                    //            {
-                    //                temp = true;
-                    //            }
-                    //        }
-                    //        for (int u = 0; u < 20; u++)
-                    //        {
-                    //            if (e.Y == game.tiles[i].block.Y + u)
-                    //            {
-                    //                temp = true;
-                    //            }
-                    //        }
-                    //    }
-                    //}
-                    for(int i=0;i<game.tiles.Count;i++)
+                    for (int i=0;i<game.tiles.Count;i++)
                     {
                         if (game.tiles[i].block.Contains(new PointF(e.X, e.Y)))
                         {
@@ -132,10 +126,14 @@ namespace GameToWorkWith
             openFileDialog1.ShowDialog();
             game.Load(openFileDialog1.FileName);
         }
-        
+
         private void Form1_Paint(object sender, PaintEventArgs e)
         {
-            game.Render();
+            if (SetupComplete != false)
+            {
+                game.Render();
+            }
+            
         }
     }
 }
