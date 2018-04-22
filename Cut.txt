@@ -1,4 +1,4 @@
-﻿    public class ESave
+﻿       public class ESave
     {
         public static void Save(Game game,int NumOfFile)
         {
@@ -176,3 +176,163 @@
             }
         }//load
     }//class
+
+
+	  public void Render()
+        {
+            try
+            {
+                while (true)
+                {
+                    if (tiles.Count > 0)
+                    {
+                        int BiggestLayer = 0;
+                        for (int i = 0; i < tiles.Count; i++)
+                        {
+                            if (tiles[i].Layer > BiggestLayer)
+                            {
+                                BiggestLayer = tiles[i].Layer;
+                            }
+                        }
+                        graphics.Clear(Color.YellowGreen);
+                        if (BiggestLayer != 0)
+                        {
+                            for (int layer = 0; layer <= BiggestLayer; layer++)
+                            {
+                                for (int i = 0; i < tiles.Count; i++)
+                                {
+                          
+                                    if (tiles[i].Layer == layer)
+                                    {
+                                        if (tiles[i].GetType() == typeof(Lake))
+                                        {
+                                            pen.Color = Color.Blue;
+                                            graphics.FillEllipse(pen.Brush, tiles[i].block);
+                                        }
+                                        if (tiles[i] is Building)
+                                        {
+                                            pen.Color = tiles[i].color;
+                                            graphics.FillRectangle(pen.Brush, tiles[i].block);
+                                        }
+                                    }
+                                }//for
+                            }//for
+                        }
+                    }
+                    Thread.Sleep(1000);
+                }
+            }
+            catch(ArgumentException)
+            {
+
+            }
+        }
+
+
+
+		 public void Run()
+        {
+            Thread tr = new Thread(Render);
+            tr.IsBackground = true;
+            tr.Start();
+            GenWorld(Size.Normal);
+            while (tr.IsAlive==true)
+            {
+                for (int i = 0; i < tiles.Count; i++)
+                {
+                    if (tiles[i].GetType() == typeof(Building))
+                    {
+                        if (tiles[i].GetType() == typeof(Farm))
+                        {
+                            Farm f = tiles[i] as Farm;
+                            Food += f.ProduceOfFood;
+                        }
+                        if (tiles[i].GetType() == typeof(PumpingStation))
+                        {
+                            PumpingStation p = tiles[i] as PumpingStation;
+                            Water += p.ProduceOfWater;
+                        }
+                    }
+                }
+                for (int i = 0; i < People; i++)
+                {
+                    Food -= 40;
+                    Water -= 90;
+                }
+                if (Food < 0 && Water < 0)
+                {
+                    break;
+                }
+                    Thread.Sleep(10000);
+                }
+            Console.WriteLine("Done!");
+        }
+
+
+
+
+
+		Form!_mouseclick
+		                    for (int i = 0; i < game.tiles.Count; i++)
+                    {
+                        if (game.tiles[i] is Building)
+                        {
+                            for (int u = 0; u < 20; u++)
+                            {
+                                if (e.X == game.tiles[i].block.X + u)
+                                {
+                                    temp = true;
+                                }
+                            }
+                            for (int u = 0; u < 20; u++)
+                            {
+                                if (e.Y == game.tiles[i].block.Y + u)
+                                {
+                                    temp = true;
+                                }
+                            }
+                        }
+                    }
+
+
+
+
+
+
+
+		 public void Run()
+        {
+            GenWorld(Size.Normal);
+            
+            while (true)
+            {
+                for (int i = 0; i < tiles.Count; i++)
+                {
+                    if (tiles[i].GetType() == typeof(Building))
+                    {
+                        if (tiles[i].GetType() == typeof(Farm))
+                        {
+                            Farm f = tiles[i] as Farm;
+                            Food += f.ProduceOfFood;
+                        }
+                        if (tiles[i].GetType() == typeof(PumpingStation))
+                        {
+                            PumpingStation p = tiles[i] as PumpingStation;
+                            Water += p.ProduceOfWater;
+                        }
+                    }
+                }
+                for (int i = 0; i < People; i++)
+                {
+                    Food -= 40;
+                    Water -= 90;
+                }
+                if (Food < 0 && Water < 0)
+                {
+                    break;
+                }
+                Render();
+                Thread.Sleep(10000);
+            }
+            Console.WriteLine("Done!");
+        }
